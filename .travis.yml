@@ -1,0 +1,11 @@
+---
+language: python
+python:
+  - "2.7"
+install: "pip install -U ansible"
+sudo: required
+script:
+  - echo -e "[elasticsearch]\nlocalhost ansible_sudo=true" > travis_host
+  - ansible-playbook --syntax-check -i travis_host elasticsearch.yaml.sample
+# travis-ci doesn't seem to have access to all the APT repos we need...
+#  - ansible-playbook -i travis_host elasticsearch.yaml.sample --connection=local -vvvv

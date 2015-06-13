@@ -1,0 +1,7 @@
+---
+- name: setup elasticsearch cluster
+  hosts: elasticsearch
+  roles:
+# normally, use this; second line is a hack for Travis-CI testing
+#   - elasticsearch
+    - { role: "./" }
