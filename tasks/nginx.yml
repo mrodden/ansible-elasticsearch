@@ -11,7 +11,7 @@
   htpasswd:
     path: /etc/nginx/esaccess
     name: tidybuilds
-    password: {{ elasticsearch_http_password }}
+    password: "{{ elasticsearch_http_password }}"
     owner: root
     group: www-data
     mode: 0640
