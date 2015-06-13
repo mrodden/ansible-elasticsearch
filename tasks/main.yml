@@ -55,6 +55,6 @@
     value: 1
     reload: true
 
-- include: nginx.yaml
-- include: firewall.yaml
+- include: nginx.yml
+- include: firewall.yml
   when: elasticsearch_do_firewall
