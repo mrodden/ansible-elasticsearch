@@ -11,12 +11,12 @@ We assume nginx is your web proxy frontend for Elasticsearch, and will be instal
 Role Variables
 --------------
 
-Right now the only variables are::
+Right now the only variables are:
 
-  __elasticsearch_group_name__  - used by the role to find your elasticsearch nodes and also will be the name of the elasticsearch cluster that will be set up.
-  __elasticsearch_do_firewall__ - set to true if you want the role to handle blocking outside traffic to your cluster on the ES internal transport ports
-  __elasticsearch_http_password__ - use this to set the password for write operation access to the Elasticsearch HTTP APIs
-  __elasticsearch_is_master__ - this will need to be True on at least one of your nodes in the cluster, otherwise they become data nodes only
+  * `elasticsearch_group_name`  - used by the role to find your elasticsearch nodes and also will be the name of the elasticsearch cluster that will be set up.
+  * `elasticsearch_do_firewall` - set to true if you want the role to handle blocking outside traffic to your cluster on the ES internal transport ports
+  * `elasticsearch_http_password` - use this to set the password for write operation access to the Elasticsearch HTTP APIs
+  * `elasticsearch_is_master` - this will need to be True on at least one of your nodes in the cluster, otherwise they become data nodes only
 
 
 Examples
