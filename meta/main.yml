@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Mathew Odden
+  description: An Ansible role to help setup and manage Elasticsearch clusters.
+  license: Apache
+  min_ansible_version: 1.6
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+  categories:
+    - cloud
+    - clustering
+dependencies: []

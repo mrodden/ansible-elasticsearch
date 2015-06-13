@@ -1,0 +1,16 @@
+---
+- name: build iptables rules
+  template:
+    src: iptables.j2
+    dest: /tmp/iptables-filter
+
+- name: load rules into iptables
+  shell: '/sbin/iptables-restore < /tmp/iptables-filter'
+
+- name: install iptables-persistent
+  apt:
+    name: iptables-persistent
+    state: present
+
+- name: save iptables rules
+  command: '/usr/sbin/service iptables-persistent save'

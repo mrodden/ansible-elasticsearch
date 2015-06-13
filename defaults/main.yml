@@ -1,0 +1,4 @@
+---
+elasticsearch_group_name: elasticsearch
+elasticsearch_do_firewall: false
+elasticsearch_http_password: supers3cr3t

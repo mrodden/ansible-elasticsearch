@@ -1,0 +1,33 @@
+---
+- name: install nginx
+  apt:
+    name: nginx
+    state: present
+- name: install python-passlib
+  apt:
+    name: python-passlib
+    state: present
+- name: setup password file for nginx site
+  htpasswd:
+    path: /etc/nginx/esaccess
+    name: tidybuilds
+    password: {{ elasticsearch_http_password }}
+    owner: root
+    group: www-data
+    mode: 0640
+    state: present
+- name: install elasticsearch nginx site
+  template:
+    src: nginx_site.j2
+    dest: /etc/nginx/sites-enabled/elasticsearch.conf
+  notify: reload nginx
+- name: remove default site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: reload nginx
+- name: enable/start nginx service
+  service:
+    name: nginx
+    state: started
+    enabled: true

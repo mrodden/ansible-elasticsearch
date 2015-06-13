@@ -1,0 +1,60 @@
+---
+- name: 'install oracle java repo (ppa:webupd8team/java)'
+  apt_repository:
+    repo: 'ppa:webupd8team/java'
+    state: present
+
+- name: accept license agreement
+  shell: |
+    echo "oracle-java7-installer  shared/accepted-oracle-license-v1-1 boolean true" > /tmp/oracle-license-debconf
+    /usr/bin/debconf-set-selections /tmp/oracle-license-debconf
+    rm /tmp/oracle-license-debconf
+
+- name: install oracle jre8
+  apt:
+    name: oracle-java8-installer
+    state: present
+
+- name: set oracle jre8 as default
+  apt:
+    name: oracle-java8-set-default
+    state: present
+
+- name: add elasticsearch repo gpg key
+  apt_key:
+    url: 'https://packages.elastic.co/GPG-KEY-elasticsearch'
+    id: D88E42B4
+    state: present
+
+- name: add elasticsearch apt repo
+  apt_repository:
+    repo: 'deb http://packages.elastic.co/elasticsearch/1.5/debian stable main'
+    state: present
+
+- name: install elasticsearch package
+  apt:
+    name: elasticsearch
+    state: present
+
+- name: setup elasticsearch config file
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+  notify: restart elasticsearch
+
+- name: enable and start elasticsearch service
+  service:
+    name: elasticsearch
+    enabled: true
+    state: started
+
+# see: http://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#setup-configuration-memory
+- name: 'set vm.swappiness to 1'
+  sysctl:
+    name: vm.swappiness
+    value: 1
+    reload: true
+
+- include: nginx.yaml
+- include: firewall.yaml
+  when: elasticsearch_do_firewall
